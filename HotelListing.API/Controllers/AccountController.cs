@@ -36,7 +36,7 @@ namespace HotelListing.API.Controllers
             return Ok();
         }
 
-
+        //Post: api/account/login
         [HttpPost]
         [Route("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -6,7 +6,7 @@ namespace HotelListing.API.Models.ApiUser
     {
         [Required]
         [EmailAddress]
-        public string EmailId { get; set; }
+        public string Email { get; set; }
         
         
         [Required]

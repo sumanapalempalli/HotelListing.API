@@ -26,9 +26,9 @@ namespace HotelListing.API.Repositories
 
         public async Task<AuthResponseDto> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.EmailId);
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
             bool isValidCredentials=await _userManager.CheckPasswordAsync(user, loginDto.Password);
-            if(user ==null || isValidCredentials == false)
+            if(user == null || isValidCredentials == false)
             {
                 return null;
             }
@@ -44,7 +44,8 @@ namespace HotelListing.API.Repositories
         public async Task<IEnumerable<IdentityError>> Register(ApiUserDto apiUserDto)
         {
             var user = _mapper.Map<ApiUser>(apiUserDto);
-            user.UserName = apiUserDto.EmailId;
+            user.UserName = apiUserDto.Email;
+            user.Email=apiUserDto.Email;
             var result=await _userManager.CreateAsync(user,apiUserDto.Password);
 
             if(result.Succeeded)
@@ -56,7 +57,7 @@ namespace HotelListing.API.Repositories
 
         private async Task<string> GenerateToken(ApiUser apiUser)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JwtSettings:Key"));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var roles=await _userManager.GetRolesAsync(apiUser);

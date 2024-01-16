@@ -2,7 +2,7 @@
 
 namespace HotelListing.API.Models.ApiUser
 {
-    public class ApiUserDto :LoginDto
+    public class ApiUserDto : LoginDto
     {
         [Required]
         public string FirstName { get; set; }
