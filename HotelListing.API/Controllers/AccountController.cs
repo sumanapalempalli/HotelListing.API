@@ -51,5 +51,21 @@ namespace HotelListing.API.Controllers
             }
             return Ok(authResponse);
         }
+
+
+        [HttpPost]
+        [Route("refreshtoken")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> RefreshToken([FromBody] AuthResponseDto request)
+        {
+            var authResponse = await _authManager.VerifyRefreshToken(request);
+            if (authResponse == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(authResponse);
+        }
     }
 }
