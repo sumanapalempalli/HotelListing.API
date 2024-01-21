@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using HotelListing.API.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace HotelListing.API.Contracts
 {
@@ -8,6 +10,8 @@ namespace HotelListing.API.Contracts
         Task<T> GetAsync(int? id);
 
         Task<T> AddAsync(T entity);
+
+        Task<PagedResult<TResult>> GetAllAsync<TResult>(QueryParameters queryParameters); 
 
         Task<T> UpdateAsync(T entity);
 
